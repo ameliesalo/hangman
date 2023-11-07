@@ -1,0 +1,15 @@
+.hidden {
+  display: none;
+}
+
+#answer {
+  display: flex;
+  flex-direction: row;
+  gap: 0.3rem;
+}
+
+#answer > * {
+  border-bottom: 1px solid black;
+  min-width: 1rem;
+  text-align: center;
+}
