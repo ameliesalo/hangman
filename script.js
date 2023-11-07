@@ -17,9 +17,9 @@ document.getElementById("answer").innerHTML = answerUnderscores.join(" ");
 // Guess a letter function
 let btn = document.querySelector("button");
 
-function guessLetterFunction() {
+function guessLetterInput() {
     let guessLetter = document.getElementById("guessLetter").value;
     console.log(guessLetter);
 }
-btn.addEventListener("click", guessLetterFunction);
+btn.addEventListener("click", guessLetterInput);
 
