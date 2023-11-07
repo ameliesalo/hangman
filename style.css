@@ -13,3 +13,11 @@
   min-width: 1rem;
   text-align: center;
 }
+
+#win > *{
+    display: none;
+}
+
+#lose > *{
+    display: none;
+}
