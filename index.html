@@ -3,12 +3,12 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>Hänga gubbe</title>
     <link rel="stylesheet" href="style.css" />
   </head>
   <body>
     <header>
-      <h1>Hangman</h1>
+      <h1>Hänga gubbe</h1>
     </header>
 
     <div id="hangman">
@@ -71,26 +71,40 @@
       </svg>
     </div>
 
-    <p id="answer">"Answer with underscore..."</p>
-    <div id="playingboard">
-      <button id="startgame">Starta</button>
-      <label for="guessaletter" class="hidden">Guess a letter:</label>
-      <input type="text" id="guessLetter" class="hidden" maxlength="1" />
-      <button id="guess" class="hidden">Submit</button>
-      <button id="resetgame" class="hidden">Återställ</button>
+    <div class="bottom">
+      <p id="answer"></p>
+      <div id="playingboard">
+        <button id="startgame">Börja spela!</button>
+        <label for="guessaletter" class="hidden">Gissa bokstav:</label>
+        <input
+          type="text"
+          id="guessLetter"
+          class="hidden"
+          maxlength="1"
+          onkeydown="return /[a-öA-Ö]/i.test(event.key)"
+        />
+        <button id="guess" class="hidden">Gissa</button>
+        <button data-function="resetgame" class="hidden resetgame">
+          Ge upp
+        </button>
+      </div>
+      <div id="wrongguesses" class="hidden">
+        <p>Fel gissningar:</p>
+        <p id="wrongletters"></p>
+      </div>
     </div>
-    <div id="wrongletters"></div>
 
-    <section id="win">
-        <p>you win!</p>
-        <button>play again?</button>
+    <section id="win" class="hidden">
+      <p><strong>Grattis, du vann!</strong></p>
+      <p>Tryck på knappen nedan för att spela igen!</p>
+      <button data-function="resetgame">Spela igen</button>
     </section>
 
-    <section id="lose">
-        <p>you lose!</p>
-        <button>play again?</button>
+    <section id="lose" class="hidden">
+      <p><strong>Nedrans, du förlorade!</strong></p>
+      <p>Tryck på knappen nedan för att spela igen!</p>
+      <button data-function="resetgame">Spela igen</button>
     </section>
-
 
     <script src="script.js"></script>
   </body>

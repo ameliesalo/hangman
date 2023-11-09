@@ -1,33 +1,39 @@
 const words = ["elephant", "tiger", "zebra"];
 
 let word;
-let lettersLeft;
-let wrongGuess = 0; //av 4
-let wrongGuesses = []; // Tom array för alla felgissningar
+let wrongGuesses = [];
 let correctGuesses = [];
 let guessLetter;
+let answer = [];
+const guessButton = document.getElementById("guess");
 const playingboardElements = document.querySelectorAll("#playingboard > *");
 const startGameButton = document.getElementById("startgame");
-const resetGameButton = document.getElementById("resetgame");
-const wrongGuessesBox = document.getElementById("wrongletters");
+const resetGameButtons = document.querySelectorAll("[data-function=resetgame]");
+const wrongGuessesBox = document.getElementById("wrongguesses");
+const wrongLettersBox = document.getElementById("wrongletters");
+const guessLetterField = document.getElementById("guessLetter");
 const bodyParts = document.querySelectorAll("[data-name=body");
+const winBox = document.getElementById("win");
+const loseBox = document.getElementById("lose");
+const answerBox = document.getElementById("answer");
 
 const startGame = () => {
   word = words[Math.floor(Math.random() * words.length)];
-  lettersLeft = word.length;
 
   playingboardElements.forEach((playingboardElement) => {
     playingboardElement.classList.toggle("hidden");
   });
+  guessLetterField.disabled = false;
+  guessButton.disabled = false;
 
   drawWord();
+  guessLetterField.focus();
 };
 
 const resetGame = () => {
   word = "";
-  wrongGuess = 0;
-  wrongGuesses = [];
-  answerUnderscores = [];
+  answer = [];
+  correctGuesses = [];
   wrongGuesses = [];
 
   drawWord();
@@ -38,49 +44,46 @@ const resetGame = () => {
   bodyParts.forEach((bodyPart) => {
     bodyPart.classList = "hidden";
   });
+  wrongGuessesBox.classList = "hidden";
+  winBox.classList = "hidden";
+  loseBox.classList = "hidden";
 };
 
-startGameButton.addEventListener("click", startGame);
-resetGameButton.addEventListener("click", resetGame);
-
 // Answer with underscores:
-let answerUnderscores = [];
 const drawWord = () => {
   for (let i = 0; i < word.length; i++) {
-    answerUnderscores[i] = "<p></p>";
+    answer[i] = "<p></p>";
   }
-  if (answerUnderscores.length == 0) {
-    document.getElementById("answer").innerHTML = answerUnderscores;
+  if (answer.length == 0) {
+    answerBox.innerHTML = answer;
   } else {
-    document.getElementById("answer").innerHTML = answerUnderscores.join("");
+    answerBox.innerHTML = answer.join("");
   }
 };
 
 // Guess a letter function
-let guessButton = document.getElementById("guess");
-
 const guessLetterInput = () => {
-  guessLetter = document.getElementById("guessLetter").value;
+  guessLetter = document.getElementById("guessLetter").value.toLowerCase();
 
   if (
-    !answerUnderscores.includes(`<p>${guessLetter}</p>`) &&
+    !answer.includes(`<p>${guessLetter}</p>`) &&
     !wrongGuesses.includes(guessLetter)
   ) {
     if (word.includes(guessLetter)) {
       for (let i = 0; i < word.length; i++) {
         if (word[i] === guessLetter) {
-          answerUnderscores.splice(i, 1, `<p>${guessLetter}</p>`);
+          answer.splice(i, 1, `<p>${guessLetter}</p>`);
           correctGuesses.push(guessLetter);
         }
       }
-      document.getElementById("answer").innerHTML = answerUnderscores.join(" ");
+      answerBox.innerHTML = answer.join(" ");
     } else {
-      wrongGuess++;
       wrongGuesses.push(guessLetter);
-      wrongGuessesBox.innerHTML = wrongGuesses.join(", ");
-      switch (wrongGuess) {
+      wrongLettersBox.innerHTML = wrongGuesses.join(", ");
+      switch (wrongGuesses.length) {
         case 1:
           document.getElementById("head").classList = "";
+          wrongGuessesBox.classList = "";
           break;
         case 2:
           document.getElementById("body").classList = "";
@@ -97,14 +100,29 @@ const guessLetterInput = () => {
     alert(`Du har redan gissat ${guessLetter}`);
   }
 
-  if (wrongGuess == 4) {
-    alert("Du förlorade");
+  if (wrongGuesses.length == 4) {
+    loseBox.classList = "win-lose";
+    guessLetterField.disabled = true;
+    guessButton.disabled = true;
   }
 
   if (word.length == correctGuesses.length) {
-    alert("Du vann");
+    winBox.classList = "win-lose";
+    guessLetterField.disabled = true;
+    guessButton.disabled = true;
   }
 
   document.getElementById("guessLetter").value = "";
+  guessLetterField.focus();
 };
+
 guessButton.addEventListener("click", guessLetterInput);
+startGameButton.addEventListener("click", startGame);
+resetGameButtons.forEach((resetGameButton) => {
+  resetGameButton.addEventListener("click", resetGame);
+});
+document.addEventListener("keypress", (event) => {
+  if (event.key == "Enter") {
+    guessLetterInput();
+  }
+});

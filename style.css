@@ -1,3 +1,55 @@
+@import url("https://fonts.googleapis.com/css2?family=Fira+Sans&family=Kenia&display=swap");
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  max-width: 800px;
+  margin: 0 auto;
+  height: 100vh;
+  font-family: "Fira Sans", sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+}
+
+header {
+  text-align: center;
+  font-family: "Kenia", sans-serif;
+  font-size: 2rem;
+}
+
+#hangman {
+  display: flex;
+  justify-content: center;
+}
+
+button {
+  padding: 0.5rem 1rem;
+  border-radius: 0.5rem;
+  border: 0;
+  background: #10b981;
+  font-weight: bold;
+}
+
+.resetgame {
+  background: #f87171;
+}
+
+input {
+  padding: 0.5rem;
+  width: 2rem;
+  text-align: center;
+  border-radius: 0.5rem;
+  border: 0;
+  background: #10b981;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
 .hidden {
   display: none;
 }
@@ -11,13 +63,32 @@
 #answer > * {
   border-bottom: 1px solid black;
   min-width: 1rem;
+  min-height: 1.3rem;
   text-align: center;
+  text-transform: uppercase;
 }
 
-#win > *{
-    display: none;
+#win,
+#lose {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: #d2d0d0;
+  padding: 1rem;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
+  border-radius: 0.5rem;
 }
 
-#lose > *{
-    display: none;
+.win-lose {
+  display: flex;
+}
+
+.bottom {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1rem;
 }
